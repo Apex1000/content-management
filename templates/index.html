@@ -1,0 +1,142 @@
+{% extends './includes/base.html' %}
+{% block body %}
+<div class="row" style="width: 100%;">
+    <div class="col-md-2" style="padding: 0px 22px;">
+        <br>
+        <div style="margin: 0px 19px;">
+            <button class="btn btn-primary" onclick="window.location.href='/add_data'" >Add Record</button>
+            <button class="btn btn-primary" onclick="window.location.href='/backup'" >Backup</button>
+        </div>
+        <hr>
+        <div class="pat-div" style="padding: 0px 22px;"  >
+            <h5>Search Data</h5>
+            <form method="GET"  class="form-group">
+                <div class="row">
+            
+                    <label for="category">Example select</label>
+                        <select class="form-control" name="category">
+                            <option>Professional</option>
+                            <option>Corporate</option>
+                            <option>Government</option>
+                            <option>Institute</option>
+                            <option>Student</option>
+                        </select>
+                    <!-- <div class="col-xs-2">
+                        <label for="category">Category</label>
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" name="category" class="form-control" placeholder="Category" style="margin-top: -8px;">
+                    </div> -->
+                    <div class="col-xs-2">
+                        <label for="phone_number">Phone number</label>
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" name="phone_number" class="form-control" placeholder="Phone Number" style="margin-top: -8px;">
+                    </div>
+                    <div class="col-xs-2">
+                            <label for="designation" >Designation</label>
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" name="designation" class="form-control" placeholder="Designation" style="margin-top: -8px;">
+                    </div>
+                    <div class="col-xs-2">
+                            <label for="pin_code">Pin Code</label>
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" name="pin_code" class="form-control" placeholder="Pin Code" style="margin-top: -8px;" >
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 7px">
+                    <input class="btn btn-primary" onclick="javascript: form.action='/filter';" type="submit" value="Search">
+                    <input class="btn btn-primary" onclick="javascript: form.action='/export';" type="submit" value="Export" style="margin: 0px 7px;">
+                </div>
+            </form>
+        </div>
+        <div style="margin: 0px 34px;">
+            <button class="btn btn-primary" onclick="window.location.href='/upload'" >Upload Data</button>
+        </div>
+
+    </div>
+    <div  class="col-md-10" >
+            <hr>
+            {% include './includes/_messages.html' %}
+            <div id="table-wrapper">
+                    <div id="table-scroll">    
+                    <table class="table table-striped">
+                        <tr>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>DOB</th>
+                        <th>Membership Number</th>
+                        <th>Designation</th>
+                        <th>Company Name</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Mo. Number</th>
+                        <th>Land Line Number</th>
+                        <th>Source of Data</th>
+                        <th>Source of Creation</th>
+                        <th>Source of Modification</th>
+                        <th>File Name</th>
+                        <th></th>
+                        <th></th>
+                        </tr>
+                        {% for name in users %}
+                            <tr>
+                            <td>{{name.category}}</td>
+                            <td>{{name.name}}</td>
+                            <td>{{name.dob}}</td>
+                            <td>{{name.membership_number}}</td>
+                            <td>{{name.designation}}</td>
+                            <td>{{name.company_name}}</td>
+                            <td>
+                                <ul>
+                                {% for add in name.address %}
+                                    <li>{{add.add1}} {{add.add2}} {{add.add3}} {{add.city}} {{add.state}} {{add.pin_code}}</li>
+                                {%endfor%}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    {% for em in name.email %}
+                                        <li>{{ em.email }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    {% for num in name.phone_number %}
+                                        <li>{{num.number}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>{{name.landline_number}}</td>
+                            <td>{{name.source_of_data}}</td>
+                            <td>{{name.date_of_creation}}</td>
+                            <td>{{name.date_of_modification}}</td>
+                            <td>{{name.file_name}}</td>
+                            <td>{% if session.types =='superuser' %}
+                                <form action="{{url_for('delete', id=name.email[0].email)}}" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                </form>
+                                {% endif %}
+                            </td>
+                            <td><a href="edit/{{name.email[0].email}}" class="btn btn-default pull-right">Edit</a>
+                            </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+            </div></div>
+        {{ pagination.links }}
+        </div>
+</div>
+{% endblock %}
+{% block js %}
+  {% if active_url %}
+    $('#{{ active_url }}').addClass('active');
+  {% else %}
+  $('#users-url').addClass('active');
+  {% endif %}
+{% endblock %}

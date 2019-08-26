@@ -1,0 +1,87 @@
+{% extends './includes/base.html' %}
+{% block body %}
+<br>
+<div class = "container" >
+    <h1>Add Record</h1>
+  <div class="row">
+    <div class="col-sm-4">
+      {% from "./includes/_fromhelper.html" import render_field %}
+      <form method="POST" action="{{ url_for('adddata') }}">
+          <div class="form-group">
+              {{ render_field(form.category, class_="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.name, class_="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.dob, class_="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.membership_number, class_="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.designation, class_="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.company_name, class_="form-control") }}
+          </div>
+          <div class="form-group">
+              {{ render_field(form.add1, class_="form-control") }}
+            </div>
+            <div class="form-group">
+              {{ render_field(form.add2, class_="form-control") }}
+            </div>
+            <div class="form-group">
+              {{ render_field(form.add3, class_="form-control") }}
+            </div>
+            <div class="form-group">
+              {{ render_field(form.add4, class_="form-control") }}
+            </div>
+            <div class="form-group">
+              {{ render_field(form.city, class_="form-control") }}
+            </div>
+            <div class="form-group">
+              {{ render_field(form.state, class_="form-control") }}
+            </div>
+            <div class="form-group">
+              {{ render_field(form.region, class_="form-control") }}
+            </div>
+            <div class="form-group">
+              {{ render_field(form.pin_code, class_="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ render_field(form.email, class_="form-control") }}
+              </div>
+              <div class="form-group">
+                  {{ render_field(form.email1, class_="form-control") }}
+                </div>
+              <div class="form-group">
+                {{ render_field(form.phone_number, class_="form-control") }}
+              </div>
+          <div class="form-group">
+              {{ render_field(form.landline_number, class_="form-control") }}
+            </div>
+          <div class="form-group">
+            {{ render_field(form.source_of_data, class_="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.date_of_creation, class_="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.date_of_modification, class_="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ render_field(form.file_name, class_="form-control") }}
+          </div>
+        <p><input class="btn btn-primary" type="submit" value="Submit">
+      </form>
+    </div>
+  </div>  
+</div>
+{% endblock %}
+
+{% block js %}
+$(function () {
+  $('#datepick').datetimepicker();
+});
+{% endblock %}
