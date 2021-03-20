@@ -5,7 +5,7 @@ flask-paginate==0.5.3
 Flask-PyMongo==2.3.0
 Flask-WTF==0.14.2
 itsdangerous==1.1.0
-Jinja2==2.10.1
+Jinja2==2.11.3
 lml==0.0.9
 MarkupSafe==1.1.1
 pyexcel==0.5.15
